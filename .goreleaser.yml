@@ -1,0 +1,60 @@
+project_name: cloudns-backup
+
+release:
+  github:
+    owner: ripienaar
+    name: cloudns-backup
+  name_template: "Release {{.Version}}"
+  draft: true
+
+changelog:
+  skip: true
+
+builds:
+  - main: main.go
+    id: cloudns-backup
+    binary: cloudns-backup
+    env:
+      - GO111MODULE=on
+      - CGO_ENABLED=0
+    goos:
+      - darwin
+      - linux
+      - windows
+      - freebsd
+    goarch:
+      - amd64
+      - arm
+      - arm64
+      - 386
+      - s390x
+    goarm:
+      - 6
+      - 7
+    ignore:
+      - goos: freebsd
+        goarch: arm
+      - goos: freebsd
+        goarch: arm64
+      - goos: freebsd
+        goarch: 386
+
+archives:
+  - name_template: "cloudns-backup-{{.Version}}-{{.Os}}-{{.Arch}}{{if .Arm}}{{.Arm}}{{end}}"
+    wrap_in_directory: true
+    format: zip
+    files:
+      - README.md
+      - LICENSE
+
+checksum:
+  name_template: "SHA256SUMS"
+  algorithm: sha256
+
+dockers:
+  - goos: linux
+    goarch: amd64
+    dockerfile: Dockerfile.goreleaser
+    image_templates:
+      - "ghcr.io/ripienaar/cloudns-backup:latest"
+      - "ghcr.io/ripienaar/cloudns-backup:{{ .Tag }}"

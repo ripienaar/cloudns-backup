@@ -1,0 +1,6 @@
+FROM alpine:latest
+
+ENTRYPOINT ["/bin/cloudns-backup"]
+
+COPY cloudns-backup /bin/cloudns-backup
+
