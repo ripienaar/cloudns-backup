@@ -4,7 +4,8 @@ A basic tool to export all master zones in a ClouDNS account to Bind zone files.
 
 ## Status?
 
-It's working in the most basic form, later we might support restore also.
+It's working in the most basic form, later we might support restore also. Restore from Bind zone files is supported by 
+the ClouDNS UI though.
 
 ## Usage?
 
@@ -57,7 +58,7 @@ jobs:
         run: |
           RUNNER="zones_runner_${GITHUB_RUN_NUMBER}"
 
-          git checkout "${GITHUB_REF:11}"
+          git checkout main
 
           docker run --name ${RUNNER} ghcr.io/ripienaar/cloudns-backup:latest \
             backup \
